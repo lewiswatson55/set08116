@@ -12,18 +12,26 @@ target_camera cam;
 bool load_content() {
   // *********************************
   // Set geometry type to triangle fan
-
+    geom.set_type(GL_TRIANGLE_FAN);
   // *********************************
+
+    vec3 v0 = vec3(0.0f,0.0f,0.0f);
+    vec3 v1 = vec3(-2.0f,2.0f,0.0f);
+    vec3 v2 = vec3(-1.5f,3.5f,0.0f);
+    vec3 v3 = vec3(0.0f,4.0f,0.0f);
+    vec3 v4 = vec3(1.5f,3.5f,0.0f);
+    vec3 v5 = vec3(2.0f,2.0f,0.0f);
+
   // Positions
   vector<vec3> positions{
       // *********************************
       // Add the position data for our triangle fan here
-
+      v0,v5,v4,v3,v2,v1,
       // *********************************
   };
   // Colours
   vector<vec4> colours{vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f),
-                       vec4(1.0f, 0.0f, 0.0f, 1.0f)};
+                       vec4(1.0f, 0.0f, 0.0f, 1.0f),vec4(1.0f, 0.0f, 0.0f, 1.0f),vec4(1.0f, 0.0f, 0.0f, 1.0f)};
   // Add to the geometry
   geom.add_buffer(positions, BUFFER_INDEXES::POSITION_BUFFER);
   geom.add_buffer(colours, BUFFER_INDEXES::COLOUR_BUFFER);
@@ -36,6 +44,7 @@ bool load_content() {
 
   // Set camera properties
   cam.set_position(vec3(10.0f, 10.0f, 10.0f));
+  //cam.set_position(vec3(0.0f, -5.0f, 10.0f)); //View with correct perspective
   cam.set_target(vec3(0.0f, 0.0f, 0.0f));
   auto aspect = static_cast<float>(renderer::get_screen_width()) / static_cast<float>(renderer::get_screen_height());
   cam.set_projection(quarter_pi<float>(), aspect, 2.414f, 1000.0f);
