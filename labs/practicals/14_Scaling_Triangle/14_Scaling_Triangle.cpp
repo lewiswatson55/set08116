@@ -24,6 +24,7 @@ bool load_content() {
   // Load in shaders
   eff.add_shader("shaders/basic.vert", GL_VERTEX_SHADER);
   eff.add_shader("shaders/basic.frag", GL_FRAGMENT_SHADER);
+
   // Build effect
   eff.build();
 
@@ -50,10 +51,10 @@ bool update(float delta_time) {
 bool render() {
   // Bind effect
   renderer::bind(eff);
-  mat4 S;
+  //mat4 S;
   // *********************************
   // Create scale matrix - use uniform scale based on s
-
+  mat4 S = scale(mat4(1.0f), vec3(s, s, s));
   // *********************************
   // Create MVP matrix
   auto V = cam.get_view();
