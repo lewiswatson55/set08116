@@ -20,8 +20,8 @@ bool load_content() {
   vector<vec3> positions2{vec3(3.0f, 1.0f, 0.0f), vec3(2.0f, -1.0f, 0.0f), vec3(4.0f, -1.0f, 0.0f)};
   // *********************************
   // Define texture coordinates for triangle
-  vector<vec2> tex_coords{vec2(0.5f, 1.0f), vec2(0.0f,0.0f), vec2(1.0f, 0.0f)};
-  vector<vec2> tex_coords2{ vec2(0.5f, 1.0f), vec2(0.0f,0.0f), vec2(1.0f, 0.0f) };
+  vector<vec2> tex_coords{vec2(0.5f, -1.0f), vec2(0.0f,0.0f), vec2(1.0f, 0.0f)};
+  vector<vec2> tex_coords2{ vec2(0.5f, -1.0f), vec2(0.0f,0.0f), vec2(1.0f, 0.0f) };
   // *********************************
   // Add to the geometry
   geom.add_buffer(positions, BUFFER_INDEXES::POSITION_BUFFER);
