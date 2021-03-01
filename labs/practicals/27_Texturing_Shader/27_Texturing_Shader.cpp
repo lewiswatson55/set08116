@@ -6,39 +6,44 @@ using namespace std;
 using namespace graphics_framework;
 using namespace glm;
 
-mesh m;
+mesh m, m2;
 effect eff;
 target_camera cam;
-texture tex;
+texture tex, tex2;
 
 bool load_content() {
   // Construct geometry object
-  geometry geom;
+  geometry geom, geom2;
   // Create triangle data
   // Positions
   vector<vec3> positions{vec3(0.0f, 1.0f, 0.0f), vec3(-1.0f, -1.0f, 0.0f), vec3(1.0f, -1.0f, 0.0f)};
+  vector<vec3> positions2{vec3(3.0f, 1.0f, 0.0f), vec3(2.0f, -1.0f, 0.0f), vec3(4.0f, -1.0f, 0.0f)};
   // *********************************
   // Define texture coordinates for triangle
-
+  vector<vec2> tex_coords{vec2(0.5f, 1.0f), vec2(0.0f,0.0f), vec2(1.0f, 0.0f)};
+  vector<vec2> tex_coords2{ vec2(0.5f, 1.0f), vec2(0.0f,0.0f), vec2(1.0f, 0.0f) };
   // *********************************
   // Add to the geometry
   geom.add_buffer(positions, BUFFER_INDEXES::POSITION_BUFFER);
+  geom2.add_buffer(positions2, BUFFER_INDEXES::POSITION_BUFFER);
   // *********************************
   // Add texture coordinate buffer to geometry
-
+  geom.add_buffer(tex_coords, BUFFER_INDEXES::TEXTURE_COORDS_0);
+  geom2.add_buffer(tex_coords2, BUFFER_INDEXES::TEXTURE_COORDS_0);
   // *********************************
 
   // Create mesh object
   m = mesh(geom);
+  m2 = mesh(geom2);
 
   // Load in texture shaders here
   eff.add_shader("27_Texturing_Shader/simple_texture.vert", GL_VERTEX_SHADER);
   eff.add_shader("27_Texturing_Shader/simple_texture.frag", GL_FRAGMENT_SHADER);
   // *********************************
   // Build effect
-
+  eff.build();
   // Load texture "textures/sign.jpg"
-
+  tex = texture("textures/sign.jpg");
   // *********************************
 
   // Set camera properties
@@ -72,13 +77,15 @@ bool render() {
 
   // *********************************
   // Bind texture to renderer
-
+  renderer::bind(tex, 0);
   // Set the texture value for the shader here
-
+  glUniform1i(eff.get_uniform_location("tex"), 0);
+  glUniform1i(eff.get_uniform_location("tex2"), 1);
   // *********************************
 
   // Render the mesh
   renderer::render(m);
+  renderer::render(m2);
 
   return true;
 }
