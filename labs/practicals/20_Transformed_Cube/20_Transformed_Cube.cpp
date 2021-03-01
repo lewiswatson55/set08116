@@ -20,21 +20,70 @@ bool load_content() {
       // *********************************
       // Add the position data for triangles here, (6 verts per side)
       // Front
+        vec3(-1.0f, 1.0f, 0.0f), //4
+        vec3(-1.0f, -1.0f, 0.0f), //3
+        vec3(1.0f, -1.0f, 0.0f), //2
+
+        vec3(-1.0f, 1.0f, 0.0f), //4
+        vec3(1.0f, -1.0f, 0.0f), //2
+        vec3(1.0f, 1.0f, 0.0f), //1
 
 
       // Back
 
+        vec3(1.0f, 1.0f, -2.0f),  //1
+        vec3(1.0f, -1.0f, -2.0f), //2
+        vec3(-1.0f, 1.0f, -2.0f),  //4
+
+        vec3(1.0f, -1.0f, -2.0f),  //2 
+        vec3(-1.0f, -1.0f, -2.0f), //3
+        vec3(-1.0f, 1.0f, -2.0f),  //4
+
+
+
 
       // Right
 
+        vec3(1.0f, 1.0f, 0.0f), //1
+        vec3(1.0f, -1.0f, 0.0f), //2
+        vec3(1.0f, 1.0f, -2.0f), //1
 
-      // Left
+        vec3(1.0f, -1.0f, -2.0f), //2
+        vec3(1.0f, 1.0f, -2.0f), //1
+        vec3(1.0f, -1.0f, 0.0f), //2
 
 
-      // Top
+
+      // Left 434, 343
+
+        vec3(-1.0f, 1.0f, -2.0f), //4
+        vec3(-1.0f, -1.0f, 0.0f), //3
+        vec3(-1.0f, 1.0f, 0.0f), //4
+
+        vec3(-1.0f, -1.0f, 0.0f), //3
+        vec3(-1.0f, 1.0f, -2.0f), //4
+        vec3(-1.0f, -1.0f, -2.0f), //3
+
+      // Top 4-4-1, 4-1-1
+
+      vec3(-1.0f, 1.0f, -2.0f), //-4
+      vec3(-1.0f, 1.0f, 0.0f), //4
+      vec3(1.0f, 1.0f, 0.0f), //1
+
+      vec3(-1.0f, 1.0f, -2.0f), //-4
+      vec3(1.0f, 1.0f, 0.0f), //1
+      vec3(1.0f, 1.0f, -2.0f), //-1
 
 
-      // Bottom
+      // Bottom -332, 3-2-2
+
+      vec3(-1.0f, -1.0f, 0.0f), //-3
+      vec3(-1.0f, -1.0f, -2.0f), //3
+      vec3(1.0f, -1.0f, -2.0f),  //2 
+
+      vec3(-1.0f, -1.0f, 0.0f), //-3
+      vec3(1.0f, -1.0f, -2.0f),  //2
+      vec3(1.0f, -1.0f, 0.0f),  //-2
 
 
       // *********************************
@@ -69,34 +118,33 @@ bool update(float delta_time) {
   // Arrow Keys - rotation
   // O decrease scale, P increase scale
 
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_O))  // up y
+        s += 0.05f;
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_P))  // down y
+        s -= 0.05f;
 
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_W))  // up y
+        pos += vec3(0.0f, 0.2f, 0.0f);
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_S))  // down y
+        pos += vec3(0.0f, -0.2f, 0.0f);
 
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_D))  // right x
+        pos += vec3(0.2f, 0.0f, 0.0f);
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_A))  // left x
+        pos += vec3(-0.2f, 0.0f, 0.0f);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_UP)) {
+        theta -= pi<float>() * delta_time;
+    }
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_DOWN)) {
+        theta += pi<float>() * delta_time;
+    }
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_RIGHT)) {
+        rho -= pi<float>() * delta_time;
+    }
+    if (glfwGetKey(renderer::get_window(), GLFW_KEY_LEFT)) {
+        rho += pi<float>() * delta_time;
+    }
 
   // *********************************
   // Update the camera
@@ -111,6 +159,10 @@ bool render() {
   // *********************************
   // Create transformation matrix
 
+  T = translate(mat4(1.0f), pos); // translate pos
+  R = eulerAngleXY(theta, rho);    // rotation
+  S = scale(mat4(1.0f), vec3(s, s, s));  // scale
+  M = T * (R * S);
 
 
 

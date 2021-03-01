@@ -17,7 +17,15 @@ bool load_content() {
   vector<vec3> positions{
       // *********************************
       // Add the position data for cube corners here (8 total)
+        vec3(-1.0f, 1.0f, 0.0f),  // 2    0
+        vec3(-1.0f, -1.0f, 0.0f), // 0	  1
+        vec3(1.0f, -1.0f, 0.0f),  // 1	  2
+        vec3(1.0f, 1.0f, 0.0f),   // 3	  3
 
+        vec3(1.0f, 1.0f, -2.0f),   // 7	   4
+        vec3(1.0f, -1.0f, -2.0f),  // 5	   5
+        vec3(-1.0f, -1.0f, -2.0f), // 4	   6
+        vec3(-1.0f, 1.0f, -2.0f)   //6	   7
 
 
       // *********************************
