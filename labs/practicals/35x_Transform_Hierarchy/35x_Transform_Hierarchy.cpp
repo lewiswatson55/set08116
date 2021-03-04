@@ -18,15 +18,18 @@ bool load_content() {
 
   // *********************************
   // Create Three Identical Box Meshes
-
+  vec3 dimensions(1.0f, 1.0f, 1.0f);
+  meshes[0] = mesh(geometry_builder::create_box(dimensions));
+  meshes[1] = mesh(geometry_builder::create_box(dimensions));
+  meshes[2] = mesh(geometry_builder::create_box(dimensions));
 
 
   // Move Box One to (0,1,0)
-
+  meshes[0].get_transform().translate(vec3(0.0f, 1.0f, 0.0f));
   // Move Box Two to (0,0,1)
-
+  meshes[1].get_transform().translate(vec3(0.0f, 0.0f, 1.0f));
   // Move Box Three to (0,1,0)
-
+  meshes[2].get_transform().translate(vec3(1.0f, 0.0f, 0.0f));
   // *********************************
 
   // Load texture
@@ -52,11 +55,11 @@ bool load_content() {
 bool update(float delta_time) {
   // *********************************
   // rotate Box one on Y axis by delta_time
-
+  meshes[0].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 1, 0)));
   // rotate Box Two on Z axis by delta_time
-
+  meshes[1].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 1, 0)));
   // rotate Box Three on Y axis by delta_time
-
+  meshes[2].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 0, 1)));
   // *********************************
   // Update the camera
   cam.update(delta_time);
@@ -78,7 +81,7 @@ bool render() {
   for (size_t i = 0; i < meshes.size(); i++) {
     // *********************************
     // SET M to be the usual mesh  transform matrix
-
+      auto M = meshes[i].get_transform().get_transform_matrix();
     // *********************************
 
     // Apply the heirarchy chain

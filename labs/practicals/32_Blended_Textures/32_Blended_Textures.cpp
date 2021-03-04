@@ -66,7 +66,7 @@ bool render() {
   // Create MVP matrix
   auto M = m.get_transform().get_transform_matrix();
   auto V = cam.get_view();
-  auto P = cam.get_projection();
+  auto P = cam.get_projection(); 
   auto MVP = P * V * M;
   // Set MVP matrix uniform
   glUniformMatrix4fv(eff.get_uniform_location("MVP"), // Location of uniform
@@ -76,14 +76,17 @@ bool render() {
 
   // *********************************
   // Bind the three textures - use different index for each
-
-
+  renderer::bind(texs[0], 0);
+  renderer::bind(texs[1], 1);
+  renderer::bind(blend_map, 2);
 
   // *********************************
 
   // Set the uniform values for textures
   static int tex_indices[] = {0, 1};
-  glUniform1iv(eff.get_uniform_location("tex"), 2, tex_indices);
+  //glUniform1iv(eff.get_uniform_location("tex"), 0, tex_indices);
+  glUniform1i(eff.get_uniform_location("tex[0]"), 0);
+  glUniform1i(eff.get_uniform_location("tex[1]"), 1);
   glUniform1i(eff.get_uniform_location("blend"), 2);
 
   // Render the mesh

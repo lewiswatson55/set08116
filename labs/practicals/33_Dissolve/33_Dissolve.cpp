@@ -17,7 +17,7 @@ float dissolve_factor = 1.0f;
 vec2 uv_scroll;
 
 bool load_content() {
-  // Create mesh object, cheating and using the mesh builder for now
+  // Create mesh object, cheating and using the mesh builder for now  
   m = mesh(geometry_builder::create_box());
   // Scale geometry
   m.get_transform().scale = vec3(10.0f);
@@ -72,12 +72,15 @@ bool render() {
 
   // *********************************
   // Set the dissolve_factor uniform value
+  glUniform1f(eff.get_uniform_location("dissolve_factor"), dissolve_factor);
 
   // Bind the two textures - use different index for each
-
+  renderer::bind(tex, 0);
+  renderer::bind(dissolve, 1);
 
   // Set the uniform values for textures - use correct index
-
+  glUniform1i(eff.get_uniform_location("tex"), 0);
+  glUniform1i(eff.get_uniform_location("dissolve"), 1);
 
   // *********************************
 
