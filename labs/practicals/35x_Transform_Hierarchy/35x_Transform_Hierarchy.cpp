@@ -57,9 +57,9 @@ bool update(float delta_time) {
   // rotate Box one on Y axis by delta_time
   meshes[0].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 1, 0)));
   // rotate Box Two on Z axis by delta_time
-  meshes[1].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 1, 0)));
+  meshes[1].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 0, 1)));
   // rotate Box Three on Y axis by delta_time
-  meshes[2].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 0, 1)));
+  meshes[2].get_transform().rotate(angleAxis(pi<float>() * delta_time, vec3(0, 1, 0)));
   // *********************************
   // Update the camera
   cam.update(delta_time);
